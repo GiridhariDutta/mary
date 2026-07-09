@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mary's Link - Case Management & EHR | The House of Mary</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper">
+                    <img src="THOM-Main-Logo2.png" alt="The House of Mary Logo" class="brand-logo-img">
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="dashboard-view">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-btn" data-target="clients-view">
+                    <i data-lucide="users"></i>
+                    <span>Client Registry</span>
+                </button>
+                <button class="nav-btn" data-target="intake-view">
+                    <i data-lucide="user-plus"></i>
+                    <span>Intake Wizard</span>
+                </button>
+                <button class="nav-btn" data-target="housing-view">
+                    <i data-lucide="home"></i>
+                    <span>Bed Registry</span>
+                </button>
+                <button class="nav-btn" data-target="clinical-view">
+                    <i data-lucide="clipboard-list"></i>
+                    <span>Clinical EHR Suite</span>
+                </button>
+                <button class="nav-btn" data-target="referrals-view">
+                    <i data-lucide="git-pull-request"></i>
+                    <span>Referrals & Services</span>
+                </button>
+                <button class="nav-btn" data-target="form-builder-view">
+                    <i data-lucide="drafting-compass"></i>
+                    <span>Form Builder</span>
+                </button>
+                <button class="nav-btn" data-target="settings-view">
+                    <i data-lucide="settings"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://i0.wp.com/thehouseofmary.org/wp-content/uploads/2019/11/Natasha-Patterson.jpg?resize=80%2C80&ssl=1" alt="Natasha Patterson" class="user-avatar-img">
+                    <div class="user-info">
+                        <span class="user-name">Natasha Patterson</span>
+                        <span class="user-role">Founder & CEO</span>
+                    </div>
+                </div>
+                <div class="location-badge">
+                    <i data-lucide="map-pin"></i>
+                    <span>East Saint Louis, IL</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <h1 id="view-title">Dashboard</h1>
+                    <p id="view-subtitle" class="text-secondary">Real-time program metrics and active client activities.</p>
+                </div>
+                <div class="header-right">
+                    <div class="search-container">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="global-search" placeholder="Search clients, notes, forms...">
+                    </div>
+                    <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                        <i data-lucide="moon" class="theme-icon-dark"></i>
+                        <i data-lucide="sun" class="theme-icon-light hidden"></i>
+                    </button>
+                    <div class="notification-container">
+                        <button class="icon-btn" id="notification-btn">
+                            <i data-lucide="bell"></i>
+                            <span class="badge-dot"></span>
+                        </button>
+                        <div class="dropdown-menu notifications-dropdown hidden" id="notifications-menu">
+                            <div class="dropdown-header">
+                                <h3>Notifications</h3>
+                                <button class="text-btn">Mark all read</button>
+                            </div>
+                            <div class="dropdown-list" id="notifications-list">
+                                <!-- Dynamically generated notifications -->
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="header-intake-btn">
+                        <i data-lucide="plus"></i>
+                        <span>New Intake</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div class="view-pane">
+                
+                <!-- 1. Dashboard View -->
+                <section id="dashboard-view" class="view-section active">
+                    <!-- Metric Cards Grid -->
+                    <div class="metrics-grid">
+                        <div class="metric-card card">
+                            <div class="metric-header">
+                                <span class="metric-title text-secondary">Active Caseload</span>
+                                <div class="metric-icon icon-bg-indigo">
+                                    <i data-lucide="users"></i>
+                                </div>
+                            </div>
+                            <div class="metric-value-container">
+                                <span class="metric-value" id="metric-active-clients">0</span>
+                                <span class="metric-trend trend-up">
+                                    <i data-lucide="trending-up"></i> +8% this month
+                                </span>
+                            </div>
+                            <div class="metric-footer text-secondary">Supporting transitional growth</div>
+                        </div>
+
+                        <div class="metric-card card">
+                            <div class="metric-header">
+                                <span class="metric-title text-secondary">Bed Occupancy</span>
+                                <div class="metric-icon icon-bg-teal">
+                                    <i data-lucide="home"></i>
+                                </div>
+                            </div>
+                            <div class="metric-value-container">
+                                <span class="metric-value" id="metric-bed-occupancy">0/16</span>
+                                <span class="metric-trend" id="occupancy-percentage">0%</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="occupancy-progress" style="width: 0%"></div>
+                            </div>
+                            <div class="metric-footer text-secondary">Mary's Haven Transitional Shelter</div>
+                        </div>
+
+                        <div class="metric-card card">
+                            <div class="metric-header">
+                                <span class="metric-title text-secondary">Reentry Success Rate</span>
+                                <div class="metric-icon icon-bg-emerald">
+                                    <i data-lucide="award"></i>
+                                </div>
+                            </div>
+                            <div class="metric-value-container">
+                                <span class="metric-value" id="metric-success-rate">94.1%</span>
+                                <span class="metric-trend trend-up">
+                                    <i data-lucide="shield-check"></i> Recidivism &lt; 6%
+                                </span>
+                            </div>
+                            <div class="metric-footer text-secondary">State average: 40% recidivism</div>
+                        </div>
+
+                        <div class="metric-card card">
+                            <div class="metric-header">
+                                <span class="metric-title text-secondary">Pending Referrals</span>
+                                <div class="metric-icon icon-bg-amber">
+                                    <i data-lucide="git-pull-request"></i>
+                                </div>
+                            </div>
+                            <div class="metric-value-container">
+                                <span class="metric-value" id="metric-pending-referrals">0</span>
+                                <span class="metric-trend trend-down" id="metric-referrals-trend">
+                                    <i data-lucide="clock"></i> Action required
+                                </span>
+                            </div>
+                            <div class="metric-footer text-secondary">Medical, Legal, & Employment</div>
+                        </div>
+                    </div>
+
+                    <!-- Charts and Alerts Grid -->
+                    <div class="dashboard-grid">
+                        <!-- Chart Card -->
+                        <div class="card chart-card">
+                            <div class="card-header">
+                                <div>
+                                    <h2 class="card-title">Reentry Success Trends</h2>
+                                    <p class="text-secondary text-sm">Monthly positive outcomes (housing & job placement) vs. admissions</p>
+                                </div>
+                                <div class="chart-legend">
+                                    <span class="legend-item"><span class="legend-dot bg-indigo"></span>Placements</span>
+                                    <span class="legend-item"><span class="legend-dot bg-teal"></span>Admissions</span>
+                                </div>
+                            </div>
+                            <div class="chart-body" id="dashboard-chart-container">
+                                <!-- Dynamic SVG Chart will be injected here -->
+                            </div>
+                        </div>
+
+                        <!-- Activities and Alerts -->
+                        <div class="card logs-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Recent System Activity</h2>
+                                <button class="text-btn" id="clear-logs-btn">Clear All</button>
+                            </div>
+                            <div class="activity-feed" id="dashboard-activity-feed">
+                                <!-- Dynamic Activity Logs -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Registry Overview -->
+                    <div class="card mt-6">
+                        <div class="card-header flex-row">
+                            <div>
+                                <h2 class="card-title">Active Clients Action List</h2>
+                                <p class="text-secondary text-sm">Review risk ratings, bed numbers, and upcoming parole check-ins.</p>
+                            </div>
+                            <button class="btn btn-secondary text-sm" data-trigger-target="clients-view">View Full Registry</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Client Name</th>
+                                        <th>Bed Assignment</th>
+                                        <th>Reentry Risk Assessment</th>
+                                        <th>EHR Status</th>
+                                        <th>Parole Officer Check-in</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-quick-table">
+                                    <!-- Dynamic content -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Client Registry View -->
+                <section id="clients-view" class="view-section">
+                    <div class="filter-bar card mb-6">
+                        <div class="filter-grid">
+                            <div class="form-group">
+                                <label for="filter-search" class="text-xs font-semibold uppercase text-secondary">Search Name/ID</label>
+                                <div class="input-icon-container">
+                                    <i data-lucide="search" class="input-icon"></i>
+                                    <input type="text" id="filter-search" placeholder="Type name or ID...">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-housing" class="text-xs font-semibold uppercase text-secondary">Housing Status</label>
+                                <select id="filter-housing">
+                                    <option value="all">All Clients</option>
+                                    <option value="housed">Housed (Transitional)</option>
+                                    <option value="unhoused">Pending Housing</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="filter-risk" class="text-xs font-semibold uppercase text-secondary">Risk Rating</label>
+                                <select id="filter-risk">
+                                    <option value="all">All Risks</option>
+                                    <option value="High">High Risk</option>
+                                    <option value="Medium">Medium Risk</option>
+                                    <option value="Low">Low Risk</option>
+                                </select>
+                            </div>
+                            <div class="form-group flex-end">
+                                <button class="btn btn-secondary w-full" id="reset-filters-btn">
+                                    <i data-lucide="rotate-ccw"></i>
+                                    <span>Reset Filters</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Client ID</th>
+                                        <th>Client Name</th>
+                                        <th>Admission Date</th>
+                                        <th>Risk Category</th>
+                                        <th>Bed Location</th>
+                                        <th>EHR Charting</th>
+                                        <th class="text-right">Action Operations</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="registry-table-body">
+                                    <!-- Dynamically filled -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-footer">
+                            <span class="text-secondary text-sm" id="table-entries-count">Showing 0 of 0 entries</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Intake Wizard View -->
+                <section id="intake-view" class="view-section">
+                    <div class="wizard-container card">
+                        <div class="wizard-steps-header">
+                            <div class="wizard-step active" data-step="1">
+                                <div class="step-num">1</div>
+                                <div class="step-title">Personal Demographics</div>
+                            </div>
+                            <div class="wizard-line"></div>
+                            <div class="wizard-step" data-step="2">
+                                <div class="step-num">2</div>
+                                <div class="step-title">Justice System Details</div>
+                            </div>
+                            <div class="wizard-line"></div>
+                            <div class="wizard-step" data-step="3">
+                                <div class="step-num">3</div>
+                                <div class="step-title">Clinical & Housing Needs</div>
+                            </div>
+                        </div>
+
+                        <form id="intake-wizard-form" class="wizard-form">
+                            <!-- Step 1: Personal Demographics -->
+                            <div class="wizard-pane active" data-step-pane="1">
+                                <div class="form-grid mb-6">
+                                    <div class="form-group col-span-2">
+                                        <label for="intake-firstname" class="required">First Name</label>
+                                        <input type="text" id="intake-firstname" required placeholder="Jane">
+                                    </div>
+                                    <div class="form-group col-span-2">
+                                        <label for="intake-lastname" class="required">Last Name</label>
+                                        <input type="text" id="intake-lastname" required placeholder="Doe">
+                                    </div>
+                                    <div class="form-group col-span-2">
+                                        <label for="intake-dob" class="required">Date of Birth</label>
+                                        <input type="date" id="intake-dob" required>
+                                    </div>
+                                    <div class="form-group col-span-2">
+                                        <label for="intake-phone">Phone Number</label>
+                                        <input type="tel" id="intake-phone" placeholder="+1 (618) 555-0199">
+                                    </div>
+                                    <div class="form-group col-span-4">
+                                        <label for="intake-email">Email Address</label>
+                                        <input type="email" id="intake-email" placeholder="jane.doe@example.com">
+                                    </div>
+                                    <div class="form-group col-span-4">
+                                        <label for="intake-emergency-name">Emergency Contact Name</label>
+                                        <input type="text" id="intake-emergency-name" placeholder="John Doe (Spouse)">
+                                    </div>
+                                    <div class="form-group col-span-4">
+                                        <label for="intake-emergency-phone">Emergency Contact Phone</label>
+                                        <input type="tel" id="intake-emergency-phone" placeholder="+1 (618) 555-9988">
+                                    </div>
+                                </div>
+                                <div class="wizard-buttons">
+                                    <span></span> <!-- Spacer -->
+                                    <button type="button" class="btn btn-primary next-step-btn">
+                                        <span>Next: Justice Details</span>
+                                        <i data-lucide="arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Justice System Details -->
+                            <div class="wizard-pane" data-step-pane="2">
+                                <div class="form-grid mb-6">
+                                    <div class="form-group col-span-3">
+                                        <label for="intake-po-name">Parole/Probation Officer Name</label>
+                                        <input type="text" id="intake-po-name" placeholder="Officer Robert Miller">
+                                    </div>
+                                    <div class="form-group col-span-3">
+                                        <label for="intake-po-phone">PO Phone / Contact</label>
+                                        <input type="tel" id="intake-po-phone" placeholder="+1 (618) 555-4040">
+                                    </div>
+                                    <div class="form-group col-span-2">
+                                        <label for="intake-release-date" class="required">Release Date</label>
+                                        <input type="date" id="intake-release-date" required>
+                                    </div>
+                                    <div class="form-group col-span-4">
+                                        <label for="intake-charges">Charges / Justice Status Summary</label>
+                                        <textarea id="intake-charges" rows="3" placeholder="Brief details about release conditions, parole schedule, etc..."></textarea>
+                                    </div>
+                                    <div class="form-group col-span-2">
+                                        <label for="intake-risk" class="required">Assessed Recidivism Risk Level</label>
+                                        <select id="intake-risk" required>
+                                            <option value="">Select level...</option>
+                                            <option value="Low">Low Risk (Needs Stable Transition)</option>
+                                            <option value="Medium">Medium Risk (Requires Regular Case Plan)</option>
+                                            <option value="High">High Risk (Requires Intensive Support)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="wizard-buttons">
+                                    <button type="button" class="btn btn-secondary prev-step-btn">
+                                        <i data-lucide="arrow-left"></i>
+                                        <span>Back</span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary next-step-btn">
+                                        <span>Next: Clinical & Housing</span>
+                                        <i data-lucide="arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Clinical & Housing Needs -->
+                            <div class="wizard-pane" data-step-pane="3">
+                                <div class="form-grid mb-6">
+                                    <div class="form-group col-span-3">
+                                        <label for="intake-meds">Active Medications (List if any)</label>
+                                        <input type="text" id="intake-meds" placeholder="e.g. Fluoxetine 20mg QD">
+                                    </div>
+                                    <div class="form-group col-span-3">
+                                        <label for="intake-conditions">Known Medical/Mental Health Conditions</label>
+                                        <input type="text" id="intake-conditions" placeholder="e.g. PTSD, Hypertension">
+                                    </div>
+                                    <div class="form-group col-span-3">
+                                        <label for="intake-substance">Substance Use History Summary</label>
+                                        <input type="text" id="intake-substance" placeholder="e.g. Alcohol Use Disorder (remission)">
+                                    </div>
+                                    <div class="form-group col-span-3">
+                                        <label for="intake-housing-status" class="required">Housing Status</label>
+                                        <select id="intake-housing-status" required>
+                                            <option value="">Select status...</option>
+                                            <option value="unhoused">Pending Transitional Bed Assignment</option>
+                                            <option value="housed">Assign Bed Immediately</option>
+                                            <option value="external">Independent Housing / External Placement</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-span-6 border-t pt-4">
+                                        <label class="flex-row items-center font-normal">
+                                            <input type="checkbox" id="intake-consent" required>
+                                            <span class="ml-2 text-sm">Client gives consent to store electronic health records (EHR) and share case management logs under HIPAA confidentiality protocols.</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="wizard-buttons">
+                                    <button type="button" class="btn btn-secondary prev-step-btn">
+                                        <i data-lucide="arrow-left"></i>
+                                        <span>Back</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-success">
+                                        <i data-lucide="check"></i>
+                                        <span>Complete Client Intake</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 4. Housing & Bed Registry View -->
+                <section id="housing-view" class="view-section">
+                    <div class="alert alert-info mb-6">
+                        <i data-lucide="info"></i>
+                        <div>
+                            <span class="font-bold">Mary's Haven Registry:</span> Select an "Available" bed to check in a client, or manage the occupant of a bed to discharge/checkout. All changes save instantly.
+                        </div>
+                    </div>
+
+                    <div class="housing-summary card mb-6">
+                        <div class="occupancy-stats">
+                            <div>
+                                <span class="text-secondary text-sm">Overall Capacity</span>
+                                <h3 class="text-2xl font-bold mt-1" id="housing-occupancy-ratio">0/16 Beds occupied</h3>
+                            </div>
+                            <div>
+                                <span class="text-secondary text-sm">Occupancy Rate</span>
+                                <h3 class="text-2xl font-bold mt-1" id="housing-occupancy-percent">0%</h3>
+                            </div>
+                            <div>
+                                <span class="text-secondary text-sm">Beds Available</span>
+                                <h3 class="text-2xl font-bold text-teal mt-1" id="housing-beds-available">16 Beds</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Grid Layout -->
+                    <div class="rooms-grid" id="rooms-grid-container">
+                        <!-- Rooms and Beds will be generated programmatically in app.js -->
+                    </div>
+                </section>
+
+                <!-- 5. Clinical EHR Suite View -->
+                <section id="clinical-view" class="view-section">
+                    <div class="clinical-layout">
+                        <!-- Client Selector Sidebar -->
+                        <div class="card clinical-sidebar">
+                            <h3 class="panel-title mb-4">Select Client</h3>
+                            <div class="search-container mb-4">
+                                <i data-lucide="search" class="search-icon"></i>
+                                <input type="text" id="clinical-client-search" placeholder="Filter active clients...">
+                            </div>
+                            <div class="client-selection-list" id="clinical-client-list">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <!-- EHR Workspace -->
+                        <div class="clinical-workspace" id="clinical-workspace-view">
+                            <div class="no-selection-card card" id="clinical-no-selection">
+                                <div class="no-selection-icon">
+                                    <i data-lucide="clipboard-list"></i>
+                                </div>
+                                <h2>No Client Selected</h2>
+                                <p class="text-secondary">Please select a client from the list to view or edit their clinical chart, record health screenings, track medications, or add clinical progress notes.</p>
+                            </div>
+
+                            <div class="clinical-chart-container hidden" id="clinical-chart-active">
+                                <!-- Patient Header -->
+                                <div class="card client-header-card mb-6">
+                                    <div class="patient-main-info">
+                                        <div class="patient-avatar" id="chart-patient-avatar">JD</div>
+                                        <div>
+                                            <h2 class="patient-name" id="chart-patient-name">Jane Doe</h2>
+                                            <p class="text-secondary text-sm" id="chart-patient-meta">ID: HR-8832 | DOB: 1992-04-12 (Age: 34)</p>
+                                        </div>
+                                    </div>
+                                    <div class="patient-badges">
+                                        <span class="badge badge-risk-medium" id="chart-patient-risk">Medium Risk</span>
+                                        <span class="badge badge-housed" id="chart-patient-housing">Room 101 - Bed A</span>
+                                    </div>
+                                </div>
+
+                                <!-- EHR Navigation Tabs -->
+                                <div class="tab-header card mb-6">
+                                    <button class="tab-btn active" data-clinical-tab="clinical-notes-tab">Clinical Progress Notes</button>
+                                    <button class="tab-btn" data-clinical-tab="screenings-tab">Assessments & Screenings</button>
+                                    <button class="tab-btn" data-clinical-tab="medications-tab">Medications Log</button>
+                                </div>
+
+                                <!-- Clinical Notes Tab Pane -->
+                                <div class="tab-pane active" id="clinical-notes-tab">
+                                    <div class="card mb-6">
+                                        <h3 class="card-title mb-4">New Progress Note</h3>
+                                        <form id="new-note-form">
+                                            <div class="form-group mb-4">
+                                                <label for="note-text" class="required">Note (Detail mental health, adjustments, support status, and goal alignments)</label>
+                                                <textarea id="note-text" rows="5" required placeholder="Type clinical interaction notes here..."></textarea>
+                                            </div>
+                                            <div class="form-grid items-end mb-4">
+                                                <div class="form-group col-span-2">
+                                                    <label for="note-provider-name" class="required">Staff / Provider Signature Name</label>
+                                                    <input type="text" id="note-provider-name" required placeholder="e.g. Natasha Patterson, LCSW">
+                                                </div>
+                                                <div class="form-group col-span-2">
+                                                    <label for="note-provider-role" class="required">Staff Credentials / Title</label>
+                                                    <input type="text" id="note-provider-role" required placeholder="e.g. Case Manager / Founder">
+                                                </div>
+                                                <div class="form-group col-span-2">
+                                                    <button type="submit" class="btn btn-primary w-full" style="height: 42px;">
+                                                        <i data-lucide="lock"></i>
+                                                        <span>Sign & Lock Note</span>
+                                                    </button>
+                                                </div>
+                                                <div class="col-span-6 mt-1 text-xs text-secondary flex-row items-center gap-2">
+                                                    <i data-lucide="shield-alert" style="width:14px;height:14px;"></i>
+                                                    <span>Saving locks the note. Once signed, EHR progress notes cannot be edited.</span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="card">
+                                        <h3 class="card-title mb-4">Clinical Timeline & Historical Logs</h3>
+                                        <div class="notes-timeline" id="notes-timeline-list">
+                                            <!-- Dynamically filled with locked clinical notes -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Screenings Tab Pane -->
+                                <div class="tab-pane" id="screenings-tab">
+                                    <!-- Screenings Chooser -->
+                                    <div class="grid grid-2 mb-6">
+                                        <div class="card interactive-select-card" id="btn-trigger-phq9">
+                                            <div class="icon-circle icon-bg-indigo"><i data-lucide="heart-pulse"></i></div>
+                                            <div class="card-details">
+                                                <h4>PHQ-9 Depression Screener</h4>
+                                                <p class="text-secondary text-xs">Standard Patient Health Questionnaire scoring depression levels.</p>
+                                            </div>
+                                        </div>
+                                        <div class="card interactive-select-card" id="btn-trigger-dast10">
+                                            <div class="icon-circle icon-bg-teal"><i data-lucide="wine"></i></div>
+                                            <div class="card-details">
+                                                <h4>DAST-10 Drug Abuse Screener</h4>
+                                                <p class="text-secondary text-xs">Drug Abuse Screening Test checking levels of substance involvement.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Historical Screenings list -->
+                                    <div class="card">
+                                        <h3 class="card-title mb-4">Completed Clinical Screening Logs</h3>
+                                        <div class="table-responsive">
+                                            <table class="data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Screening Tool</th>
+                                                        <th>Date Run</th>
+                                                        <th>Score</th>
+                                                        <th>Severity Outcome</th>
+                                                        <th>Assessed By</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="screenings-history-body">
+                                                    <!-- Dynamic lists -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Medications Tab Pane -->
+                                <div class="tab-pane" id="medications-tab">
+                                    <div class="card mb-6">
+                                        <h3 class="card-title mb-4">Add Medication to Log</h3>
+                                        <form id="new-medication-form">
+                                            <div class="form-grid mb-4">
+                                                <div class="form-group col-span-2">
+                                                    <label for="med-name" class="required">Medication Name</label>
+                                                    <input type="text" id="med-name" required placeholder="e.g. Sertraline">
+                                                </div>
+                                                <div class="form-group col-span-2">
+                                                    <label for="med-dosage" class="required">Dosage Strength</label>
+                                                    <input type="text" id="med-dosage" required placeholder="e.g. 50 mg">
+                                                </div>
+                                                <div class="form-group col-span-2">
+                                                    <label for="med-frequency" class="required">Frequency</label>
+                                                    <input type="text" id="med-frequency" required placeholder="e.g. Once daily (Morning)">
+                                                </div>
+                                                <div class="form-group col-span-3">
+                                                    <label for="med-prescriber" class="required">Prescribing Doctor</label>
+                                                    <input type="text" id="med-prescriber" required placeholder="Dr. Sarah Johnson, MD">
+                                                </div>
+                                                <div class="form-group col-span-3">
+                                                    <label for="med-purpose">Indication / Purpose</label>
+                                                    <input type="text" id="med-purpose" placeholder="e.g. Major Depressive Disorder">
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i data-lucide="plus"></i>
+                                                    <span>Add Medication</span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="card">
+                                        <h3 class="card-title mb-4">Active Prescription Medication Records</h3>
+                                        <div class="table-responsive">
+                                            <table class="data-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Medication Name</th>
+                                                        <th>Dosage</th>
+                                                        <th>Frequency</th>
+                                                        <th>Prescribed By</th>
+                                                        <th>Indication</th>
+                                                        <th>Date Logged</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="medications-table-body">
+                                                    <!-- Dynamic lists -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Referrals & Services View -->
+                <section id="referrals-view" class="view-section">
+                    <div class="grid grid-1-2">
+                        <!-- Referral Logging Form -->
+                        <div class="card">
+                            <h3 class="card-title mb-4">Log New Referral / Service Support</h3>
+                            <form id="new-referral-form">
+                                <div class="form-group mb-4">
+                                    <label for="referral-client" class="required">Client Beneficiary</label>
+                                    <select id="referral-client" required>
+                                        <option value="">Select client...</option>
+                                        <!-- Dynamically generated -->
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="referral-type" class="required">Referral / Service Category</label>
+                                    <select id="referral-type" required>
+                                        <option value="Mental Health Care">Mental Health Care</option>
+                                        <option value="Substance Abuse Recovery">Substance Abuse Recovery</option>
+                                        <option value="Job Training & Employment">Job Training & Employment</option>
+                                        <option value="Legal Advocacy & Parole">Legal Advocacy & Parole</option>
+                                        <option value="Housing Assistance (Permanent)">Housing Assistance (Permanent)</option>
+                                        <option value="Primary Healthcare Clinic">Primary Healthcare Clinic</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="referral-agency" class="required">Receiving Partner Agency / Provider</label>
+                                    <input type="text" id="referral-agency" required placeholder="e.g. East St. Louis Family Clinic">
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="referral-notes">Referral Details & Directives</label>
+                                    <textarea id="referral-notes" rows="3" placeholder="Case worker notes for scheduling assistance or contact info..."></textarea>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="referral-status" class="required">Initial Status</label>
+                                    <select id="referral-status" required>
+                                        <option value="Pending">Pending (Awaiting Appointment)</option>
+                                        <option value="In Progress">In Progress (Active Program)</option>
+                                        <option value="Completed">Completed / Intake Done</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-full">
+                                    <i data-lucide="plus-circle"></i>
+                                    <span>Log Service Referral</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Referrals Timeline Log -->
+                        <div class="card">
+                            <h3 class="card-title mb-4">Referrals & Supportive Services Log</h3>
+                            <div class="referrals-list" id="referrals-timeline-container">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. Apricot Form Builder View -->
+                <section id="form-builder-view" class="view-section">
+                    <div class="form-builder-layout">
+                        <!-- Left Panel: Field Options -->
+                        <div class="card form-builder-sidebar">
+                            <h3 class="panel-title mb-4">Form Controls</h3>
+                            <p class="text-secondary text-xs mb-4">Click button to add field to custom template.</p>
+                            
+                            <div class="btn-group-vertical">
+                                <button class="btn btn-secondary text-left mb-2 w-full" id="fbtn-text">
+                                    <i data-lucide="type"></i>
+                                    <span>Add Short Text Field</span>
+                                </button>
+                                <button class="btn btn-secondary text-left mb-2 w-full" id="fbtn-textarea">
+                                    <i data-lucide="align-justify"></i>
+                                    <span>Add Multi-line Textarea</span>
+                                </button>
+                                <button class="btn btn-secondary text-left mb-2 w-full" id="fbtn-dropdown">
+                                    <i data-lucide="list"></i>
+                                    <span>Add Dropdown Selection</span>
+                                </button>
+                                <button class="btn btn-secondary text-left mb-2 w-full" id="fbtn-checkbox">
+                                    <i data-lucide="check-square"></i>
+                                    <span>Add Checkbox Toggle</span>
+                                </button>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="form-group mb-4">
+                                <label for="custom-form-name" class="required">Template Name</label>
+                                <input type="text" id="custom-form-name" value="Custom Housing Assessment">
+                            </div>
+                            
+                            <button class="btn btn-success w-full" id="btn-save-custom-form">
+                                <i data-lucide="save"></i>
+                                <span>Save Template Layout</span>
+                            </button>
+                        </div>
+
+                        <!-- Center Panel: Form Design Canvas -->
+                        <div class="card form-builder-canvas">
+                            <div class="card-header flex-row border-b pb-4 mb-4">
+                                <div>
+                                    <h3 class="card-title" id="canvas-form-title-label">Form Template Canvas</h3>
+                                    <p class="text-secondary text-xs">Configure headers, inputs, and field labels here.</p>
+                                </div>
+                                <button class="text-btn btn-danger text-sm" id="btn-clear-canvas">Clear All</button>
+                            </div>
+                            
+                            <!-- Fields will load here -->
+                            <div class="canvas-dropzone" id="canvas-drop-container">
+                                <div class="canvas-empty-state" id="canvas-empty-notice">
+                                    <i data-lucide="file-plus"></i>
+                                    <p>Your custom form is empty. Click controls on the left to start adding fields!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Saved & Rendered Forms simulator -->
+                        <div class="card form-builder-preview">
+                            <h3 class="panel-title mb-4">Form Simulation</h3>
+                            <p class="text-secondary text-xs mb-4">Select saved templates to run client data input submissions.</p>
+
+                            <div class="form-group mb-4">
+                                <label for="simulator-form-select">Choose Active Template</label>
+                                <select id="simulator-form-select">
+                                    <option value="none">-- Select Template --</option>
+                                    <!-- Loaded programmatically -->
+                                </select>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <form id="form-simulation-runner">
+                                <div class="form-group mb-4">
+                                    <label for="sim-client-select" class="required">Associate with Client</label>
+                                    <select id="sim-client-select" required>
+                                        <option value="">-- Choose Client --</option>
+                                        <!-- Active Client registry list -->
+                                    </select>
+                                </div>
+                                
+                                <div class="simulated-fields-area border-t pt-4" id="sim-fields-container">
+                                    <p class="text-secondary text-sm text-center py-4">Choose a template above to generate intake input fields.</p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-full mt-4 hidden" id="btn-submit-simulation">
+                                    <i data-lucide="send"></i>
+                                    <span>Simulate Submission</span>
+                                </button>
+                            </form>
+
+                            <hr class="my-4">
+                            
+                            <div>
+                                <h4 class="text-sm font-semibold mb-2">Simulated Submission Log</h4>
+                                <div class="simulation-log" id="simulation-submission-log">
+                                    <p class="text-secondary text-xs text-center py-4">No submissions simulated yet.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 8. Settings View -->
+                <section id="settings-view" class="view-section">
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3 class="card-title mb-4">System Settings</h3>
+                            <div class="form-group mb-4">
+                                <label class="label">Organization Metadata</label>
+                                <div class="form-grid">
+                                    <div class="form-group col-span-3">
+                                        <label for="settings-org-name">Agency Name</label>
+                                        <input type="text" id="settings-org-name" value="The House of Mary Corporation">
+                                    </div>
+                                    <div class="form-group col-span-3">
+                                        <label for="settings-org-loc">Location</label>
+                                        <input type="text" id="settings-org-loc" value="East Saint Louis, Illinois">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+
+                            <div class="form-group mb-4">
+                                <label class="label">System Control Panels</label>
+                                <p class="text-secondary text-xs mb-4">Reset and refresh database variables to clean installation levels.</p>
+                                <button class="btn btn-danger" id="settings-clear-database-btn">
+                                    <i data-lucide="trash-2"></i>
+                                    <span>Factory Reset Database Storage</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title mb-4">Nonprofit Reentry Info</h3>
+                            <div class="organization-info-card">
+                                <div class="flex-row items-center mb-4">
+                                    <div class="info-logo">M</div>
+                                    <div>
+                                        <h4 class="font-bold text-lg">The House of Mary Corporation</h4>
+                                        <p class="text-secondary text-sm">Transitional Housing & Reentry Services</p>
+                                    </div>
+                                </div>
+                                <p class="text-sm leading-relaxed mb-4 text-secondary">
+                                    Providing supportive resources, health counseling, case work, and housing integration for justice-involved women in Illinois. Built to increase success rates, decrease recidivism, and build community relationships.
+                                </p>
+                                <div class="contact-details text-sm">
+                                    <div class="contact-item mb-2">
+                                        <i data-lucide="globe"></i>
+                                        <a href="https://thehouseofmary.org/" target="_blank">thehouseofmary.org</a>
+                                    </div>
+                                    <div class="contact-item mb-2">
+                                        <i data-lucide="mail"></i>
+                                        <span>npatterson@thehouseofmary.org</span>
+                                    </div>
+                                    <div class="contact-item mb-2">
+                                        <i data-lucide="phone"></i>
+                                        <span>+1 (618) 515-3034</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals System Overlay -->
+    
+    <!-- 1. PHQ-9 Screener Modal -->
+    <div class="modal-overlay hidden" id="phq9-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>PHQ-9 Depression Severity Assessment</h3>
+                <button class="modal-close-btn" id="phq9-close"><i data-lucide="x"></i></button>
+            </div>
+            <form id="phq9-screener-form">
+                <div class="modal-body">
+                    <p class="text-secondary text-xs mb-4">Over the last 2 weeks, how often has the client been bothered by any of the following problems? (0 = Not at all, 1 = Several days, 2 = More than half the days, 3 = Nearly every day)</p>
+                    
+                    <div class="screener-questions-list">
+                        <!-- 9 Questions generated programmatically in app.js -->
+                    </div>
+                    
+                    <div class="screener-score-card mt-4">
+                        <span class="score-label">Auto-calculated Score:</span>
+                        <span class="score-number" id="phq9-total-score">0</span>
+                        <span class="badge badge-risk-low ml-4" id="phq9-score-severity">Minimal Depression (None)</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. DAST-10 Screener Modal -->
+    <div class="modal-overlay hidden" id="dast10-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>DAST-10 Drug Abuse Screening Test</h3>
+                <button class="modal-close-btn" id="dast10-close"><i data-lucide="x"></i></button>
+            </div>
+            <form id="dast10-screener-form">
+                <div class="modal-body">
+                    <p class="text-secondary text-xs mb-4">Please answer Yes (1) or No (0) for each question based on drug use behavior over the past 12 months.</p>
+                    
+                    <div class="dast-questions-list">
+                        <!-- 10 Questions generated programmatically in app.js -->
+                    </div>
+                    
+                    <div class="screener-score-card mt-4">
+                        <span class="score-label">DAST Score:</span>
+                        <span class="score-number" id="dast10-total-score">0</span>
+                        <span class="badge badge-risk-low ml-4" id="dast10-score-severity">No issues reported</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 3. Assign Bed Modal -->
+    <div class="modal-overlay hidden" id="bed-assign-modal">
+        <div class="modal-card modal-sm">
+            <div class="modal-header">
+                <h3>Assign Bed Location</h3>
+                <button class="modal-close-btn" id="bed-modal-close"><i data-lucide="x"></i></button>
+            </div>
+            <form id="bed-assignment-form">
+                <div class="modal-body">
+                    <p class="text-secondary text-xs mb-4" id="bed-modal-selection-label">Room 101 - Bed A</p>
+                    <input type="hidden" id="bed-modal-room-id">
+                    <input type="hidden" id="bed-modal-bed-id">
+                    
+                    <div class="form-group mb-4">
+                        <label for="bed-modal-client-select" class="required">Select Client to Check-in</label>
+                        <select id="bed-modal-client-select" required>
+                            <option value="">-- Choose client --</option>
+                            <!-- List of unhoused clients -->
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Complete Check-in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. Client Detail Modal Drawer -->
+    <div class="modal-overlay hidden" id="client-detail-modal">
+        <div class="modal-card modal-lg">
+            <div class="modal-header border-b pb-4">
+                <div>
+                    <h3 id="detail-modal-client-name">Jane Doe</h3>
+                    <p class="text-secondary text-xs" id="detail-modal-client-id">ID: CM-883921</p>
+                </div>
+                <button class="modal-close-btn" id="detail-modal-close"><i data-lucide="x"></i></button>
+            </div>
+            <div class="modal-body p-0">
+                <div class="drawer-layout">
+                    <!-- Drawer Left Menu -->
+                    <div class="drawer-sidebar">
+                        <button class="drawer-nav-btn active" data-drawer-tab="dtab-demographics">Demographics</button>
+                        <button class="drawer-nav-btn" data-drawer-tab="dtab-justice">Justice Profile</button>
+                        <button class="drawer-nav-btn" data-drawer-tab="dtab-ehr">Medical & Screenings</button>
+                        <button class="drawer-nav-btn" data-drawer-tab="dtab-notes">Progress Notes</button>
+                        <button class="drawer-nav-btn" data-drawer-tab="dtab-services">Referrals & Services</button>
+                    </div>
+
+                    <!-- Drawer Right Content -->
+                    <div class="drawer-content">
+                        <!-- Demographics Tab -->
+                        <div class="drawer-pane active" id="dtab-demographics">
+                            <h4 class="drawer-section-title">Personal Demographics</h4>
+                            <div class="grid grid-2 text-sm mb-4 gap-y-3">
+                                <div><span class="text-secondary font-medium block">Full Name:</span> <strong id="d-name">Jane Doe</strong></div>
+                                <div><span class="text-secondary font-medium block">Date of Birth:</span> <span id="d-dob">1992-04-12</span></div>
+                                <div><span class="text-secondary font-medium block">Phone Number:</span> <span id="d-phone">+1 (618) 555-0199</span></div>
+                                <div><span class="text-secondary font-medium block">Email:</span> <span id="d-email">jane@example.com</span></div>
+                            </div>
+                            <h4 class="drawer-section-title mt-6">Emergency Contact</h4>
+                            <div class="grid grid-2 text-sm gap-y-3">
+                                <div><span class="text-secondary font-medium block">Emergency Contact Name:</span> <span id="d-emergency-name">John Doe</span></div>
+                                <div><span class="text-secondary font-medium block">Emergency Contact Phone:</span> <span id="d-emergency-phone">+1 (618) 555-9988</span></div>
+                            </div>
+                        </div>
+
+                        <!-- Justice Profile Tab -->
+                        <div class="drawer-pane" id="dtab-justice">
+                            <h4 class="drawer-section-title">Justice System Info</h4>
+                            <div class="grid grid-2 text-sm mb-4 gap-y-3">
+                                <div><span class="text-secondary font-medium block">Parole/Probation Officer Name:</span> <strong id="d-po-name">Officer Robert Miller</strong></div>
+                                <div><span class="text-secondary font-medium block">PO Phone / Contact:</span> <span id="d-po-phone">+1 (618) 555-4040</span></div>
+                                <div><span class="text-secondary font-medium block">Release Date:</span> <span id="d-release-date">2026-06-15</span></div>
+                                <div><span class="text-secondary font-medium block">Recidivism Risk Score:</span> <span class="badge" id="d-risk-level">Medium Risk</span></div>
+                            </div>
+                            <h4 class="drawer-section-title mt-6">Charges & Notes</h4>
+                            <p class="text-sm bg-surface p-3 rounded border" id="d-charges">No charges detail run.</p>
+                        </div>
+
+                        <!-- EHR Medical & Screenings Tab -->
+                        <div class="drawer-pane" id="dtab-ehr">
+                            <h4 class="drawer-section-title">Active Prescriptions</h4>
+                            <div class="prescriptions-grid" id="d-prescriptions-list">
+                                <!-- Dynamically loaded -->
+                            </div>
+                            
+                            <h4 class="drawer-section-title mt-6">Clinical Screening Scorecards</h4>
+                            <div class="table-responsive">
+                                <table class="data-table text-xs">
+                                    <thead>
+                                        <tr>
+                                            <th>Tool Name</th>
+                                            <th>Date Run</th>
+                                            <th>Cumulative Score</th>
+                                            <th>Clinical Outcome</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="d-screenings-list">
+                                        <!-- Dynamically loaded -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Progress Notes Tab -->
+                        <div class="drawer-pane" id="dtab-notes">
+                            <h4 class="drawer-section-title">Case Notes Log</h4>
+                            <div class="timeline-scroll-area" id="d-notes-timeline">
+                                <!-- Notes list -->
+                            </div>
+                        </div>
+
+                        <!-- Referrals Tab -->
+                        <div class="drawer-pane" id="dtab-services">
+                            <h4 class="drawer-section-title">Referrals & Supportive Services</h4>
+                            <div class="timeline-scroll-area" id="d-referrals-list">
+                                <!-- Referrals list -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer border-t pt-4">
+                <button class="btn btn-danger" id="detail-modal-delete-btn">Discharge Client Records</button>
+                <button class="btn btn-secondary" id="detail-modal-close-footer-btn">Close Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Javascript Logic -->
+    <script src="app.js"></script>
+</body>
+</html>

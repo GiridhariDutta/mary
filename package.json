@@ -1,0 +1,10 @@
+{
+  "name": "marys-link-case-management",
+  "version": "1.0.0",
+  "description": "Case Management and EHR Platform for The House of Mary Corporation",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y serve -l 8000 ."
+  },
+  "dependencies": {}
+}
